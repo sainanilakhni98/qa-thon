@@ -29,7 +29,6 @@ public class Utility {
                 num = 0;
             }
         }
-        System.out.println(password);
         return password;
     }
 }
