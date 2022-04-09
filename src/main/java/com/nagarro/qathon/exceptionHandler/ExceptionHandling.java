@@ -39,7 +39,7 @@ public class ExceptionHandling implements ErrorController {
 
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<HttpResponse> userNotFoundException(UserNotFoundException exception) {
-        return createHttpResponse(NOT_FOUND, exception.getMessage());
+        return createHttpResponse(UNAUTHORIZED, exception.getMessage());
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)

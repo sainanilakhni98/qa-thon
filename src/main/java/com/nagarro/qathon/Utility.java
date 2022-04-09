@@ -1,6 +1,7 @@
 package com.nagarro.qathon;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Random;
 
 public class Utility {
     public static String getSiteURL(HttpServletRequest request){
@@ -31,4 +32,16 @@ public class Utility {
         }
         return password;
     }
+
+    public static int generateIntRandomNumber(int low,int high){
+        Random random = new Random();
+        int randomNumber = random.nextInt(high-low) + low;
+        return randomNumber;
+    }
+//
+//    public static Double generateDoubleRandomNumber(double low,double high){
+//        Random random = new Random();
+//        Double randomNumber = Double.valueOf(random.nextInt((int)high - (int)low));
+//        return randomNumber;
+//    }
 }

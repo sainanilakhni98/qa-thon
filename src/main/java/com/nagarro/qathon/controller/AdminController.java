@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 //springemailjune@gmail.com
 
+import javax.persistence.NoResultException;
 import java.util.List;
 
 @RestController
@@ -40,13 +41,13 @@ public class AdminController extends ExceptionHandling {
     }
 
     @DeleteMapping("/user/delete/{id}")
-    public String deleteUserDetailsById(@PathVariable("id") Long userId) throws Exception {
+    public ResponseEntity<?> deleteUserDetailsById(@PathVariable("id") Long userId) throws Exception {
         try {
             userDetailsService.deleteUserDetailsById(userId);
         }catch (Exception e){
-            throw new UserNotFoundException("User Not Found for id = "+userId);
+            throw new NoResultException("User Not Found for id = "+userId);
         }
-        return "UserDetails deleted Successfully!!";
+        return ResponseEntity.ok("UserDetails deleted Successfully!!");
     }
 
     @PostMapping("/campaign")
@@ -54,5 +55,8 @@ public class AdminController extends ExceptionHandling {
         emailSenderService.sendCampaign(emailRequest.getToEmail(),emailRequest.getEmailBody(),emailRequest.getEmailSubject());
         return ResponseEntity.ok("Mail Sent Successfully");
     }
+//
+//    @GetMapping("app/")
+//    public ResponseEntity<?> getDashboardData()
 
 }
