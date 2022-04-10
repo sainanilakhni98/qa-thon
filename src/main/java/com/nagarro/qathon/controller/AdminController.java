@@ -6,6 +6,7 @@ import com.nagarro.qathon.exceptionHandler.domain.UserNotFoundException;
 import com.nagarro.qathon.service.EmailSenderService;
 import com.nagarro.qathon.service.UserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 //springemailjune@gmail.com
@@ -30,14 +31,17 @@ public class AdminController extends ExceptionHandling {
     }
 
     @PostMapping("/user/create")
-    public UserDetails createUser(@RequestBody UserDetails userDetails){
-        return userDetailsService.createUser(userDetails);
+    public ResponseEntity<UserDetails> createUser(@RequestBody UserDetails userDetails){
+        UserDetails newUserDetails = userDetailsService.createUser(userDetails);
+        return new ResponseEntity<UserDetails>(newUserDetails, HttpStatus.CREATED);
     }
 
     @PutMapping("/user/edit/{id}")
-    public UserDetails updateUserDetails(@PathVariable("id") Long userId,
+    public ResponseEntity<UserDetails> updateUserDetails(@PathVariable("id") Long userId,
                                        @RequestBody UserDetails userDetails ) throws Exception {
-        return userDetailsService.updateUserDetails(userId,userDetails);
+
+        UserDetails updatedUserDetails = userDetailsService.updateUserDetails(userId,userDetails);
+        return ResponseEntity.ok(updatedUserDetails);
     }
 
     @DeleteMapping("/user/delete/{id}")
@@ -55,8 +59,5 @@ public class AdminController extends ExceptionHandling {
         emailSenderService.sendCampaign(emailRequest.getToEmail(),emailRequest.getEmailBody(),emailRequest.getEmailSubject());
         return ResponseEntity.ok("Mail Sent Successfully");
     }
-//
-//    @GetMapping("app/")
-//    public ResponseEntity<?> getDashboardData()
 
 }

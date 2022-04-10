@@ -38,10 +38,5 @@ public class Utility {
         int randomNumber = random.nextInt(high-low) + low;
         return randomNumber;
     }
-//
-//    public static Double generateDoubleRandomNumber(double low,double high){
-//        Random random = new Random();
-//        Double randomNumber = Double.valueOf(random.nextInt((int)high - (int)low));
-//        return randomNumber;
-//    }
+
 }

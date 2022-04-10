@@ -14,6 +14,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.persistence.NoResultException;
+
 import static com.nagarro.qathon.constant.UserImplConstant.*;
 import static org.springframework.http.HttpStatus.*;
 
@@ -61,7 +63,7 @@ public class UserController extends ExceptionHandling {
             userObj=this.userService.fetchUserByEmailAndPassword(tempEmail,tempPassword);
         }
         if(userObj==null){
-            throw new UserNotFoundException(NO_USER_FOUND_BY_EMAILANDPASSWORD);
+        throw new UserNotFoundException(NO_USER_FOUND_BY_EMAILANDPASSWORD);
         }
         return new ResponseEntity<>(userObj,OK);
     }
@@ -74,7 +76,7 @@ public class UserController extends ExceptionHandling {
             emailSenderService.sendForgetPasswordMail(userEmail, password);
             return new ResponseEntity<>("Mail Sent Successfully",OK);
         } catch (Exception e) {
-            return new ResponseEntity<>("Something Went Wrong",NOT_FOUND);
+            throw new NoResultException("User not found with this email : " + userEmail);
         }
     }
 }

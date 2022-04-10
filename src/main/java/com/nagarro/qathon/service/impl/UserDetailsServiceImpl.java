@@ -7,6 +7,7 @@ import com.nagarro.qathon.service.UserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.NoResultException;
 import java.util.List;
 import java.util.Objects;
 
@@ -35,14 +36,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             if(Objects.nonNull(userDetails.getRole()) && !"".equalsIgnoreCase(userDetails.getRole())){
                 userDetailsDb.setRole(userDetails.getRole());
             }
-            if(Objects.nonNull(userDetails.getName()) && !"".equalsIgnoreCase(userDetails.getName()) ){
+            if(Objects.nonNull(userDetails.getVerified()) && !"".equalsIgnoreCase(userDetails.getVerified()) ){
                 userDetailsDb.setVerified(userDetails.getVerified());
             }
             if(Objects.nonNull(userDetails.getStatus()) && !"".equalsIgnoreCase(userDetails.getStatus()) ){
                 userDetailsDb.setStatus(userDetails.getStatus());
             }
             return userDetailRepository.save(userDetailsDb);
-        }catch(Exception e){
+        }
+        catch(Exception e){
             throw new Exception("Method Not Allowed");
         }
 
