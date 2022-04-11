@@ -1,10 +1,7 @@
 package com.nagarro.qathon.service.impl;
 
 import com.nagarro.qathon.Utility;
-import com.nagarro.qathon.dashboardDataCreator.ConversionRatesCreator;
-import com.nagarro.qathon.dashboardDataCreator.CurrentVisitsCreator;
-import com.nagarro.qathon.dashboardDataCreator.UserStatisticsCreator;
-import com.nagarro.qathon.dashboardDataCreator.WebsiteVisitsCreator;
+import com.nagarro.qathon.dashboardDataCreator.*;
 import com.nagarro.qathon.entity.*;
 import com.nagarro.qathon.repository.*;
 import com.nagarro.qathon.service.UserService;
@@ -32,6 +29,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private ConversionRatesRepository conversionRatesRepository;
 
+    @Autowired
+    private CampaignClicksRepository campaignClicksRepository;
+
     @Override
     public User register(User user) {
         user.setPassword(Utility.convertStringToAsciiValue(user.getPassword()));
@@ -44,6 +44,9 @@ public class UserServiceImpl implements UserService {
         websiteVisitsRepository.saveAll(WebsiteVisitsCreator.getWebsiteVisits(user));
         //conversionRates
         conversionRatesRepository.save(ConversionRatesCreator.getConversionRates(user));
+        //campaignClicks
+        campaignClicksRepository.saveAll(CampaignClicksCreator.getCampaignClicks(user));
+        System.out.println(CampaignClicksCreator.getCampaignClicks(user));
         return userRepository.save(user);
     }
     @Override

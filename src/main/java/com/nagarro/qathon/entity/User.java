@@ -57,4 +57,10 @@ public class User {
     )
     private ConversionRates conversionRates;
 
+    @JsonManagedReference
+    @OneToMany(
+            mappedBy = "user"
+    )
+    private List<CampaignClicks> campaignClicks;
+
 }
