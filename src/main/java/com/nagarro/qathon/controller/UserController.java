@@ -1,10 +1,12 @@
 package com.nagarro.qathon.controller;
 import com.nagarro.qathon.Utility;
 import com.nagarro.qathon.entity.User;
+import com.nagarro.qathon.entity.UserDetails;
 import com.nagarro.qathon.exceptionHandler.ExceptionHandling;
 import com.nagarro.qathon.exceptionHandler.domain.UserFoundException;
 import com.nagarro.qathon.exceptionHandler.domain.UserNotFoundException;
 import com.nagarro.qathon.service.EmailSenderService;
+import com.nagarro.qathon.service.UserDetailsService;
 import com.nagarro.qathon.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +17,9 @@ import org.springframework.web.bind.annotation.*;
 
 
 import javax.persistence.NoResultException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.nagarro.qathon.constant.UserImplConstant.*;
 import static org.springframework.http.HttpStatus.*;
@@ -33,6 +38,9 @@ public class UserController extends ExceptionHandling {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UserDetailsService userDetailsService;
+
     private final Logger LOGGER =
             LoggerFactory.getLogger(UserController.class);
 
@@ -40,10 +48,8 @@ public class UserController extends ExceptionHandling {
     @PostMapping("register")
     public ResponseEntity<User> registerUser(@RequestBody User user) throws Exception {
         String tempEmail = user.getEmail();
-        LOGGER.info("email -->"+tempEmail);
         if(tempEmail != null && !"".equals(tempEmail)){
             User userobj = userService.getUser(Utility.convertStringToAsciiValue(tempEmail));
-            LOGGER.info("User --> "+ userobj);
             if(userobj != null){
                 throw new UserFoundException(USER_ALREADY_EXISTS + tempEmail);
             }
@@ -52,11 +58,10 @@ public class UserController extends ExceptionHandling {
         userobj =  this.userService.register(user);
         return new ResponseEntity<>(userobj,OK);
     }
-
     @PostMapping("login")
     public ResponseEntity<User> loginUser(@RequestBody User user) throws Exception {
-        String tempEmail =user.getEmail();
-        String tempPassword =user.getPassword();
+        String tempEmail =Utility.convertStringToAsciiValue(user.getEmail());
+        String tempPassword = Utility.convertStringToAsciiValue(user.getPassword());
 
         User userObj = null;
         if(tempEmail!=null && tempPassword!=null){
@@ -67,6 +72,7 @@ public class UserController extends ExceptionHandling {
         }
         return new ResponseEntity<>(userObj,OK);
     }
+
 
     @GetMapping("forgotpassword")
     public ResponseEntity<?> sendPassword(@RequestParam(name = "email") String userEmail) {
@@ -79,4 +85,11 @@ public class UserController extends ExceptionHandling {
             throw new NoResultException("User not found with this email : " + userEmail);
         }
     }
+
+    @GetMapping("get-all-registered-users-for-backend")
+    public List<User> getAllRegisteredUsers() {
+       List<User> registeredUsers = userService.getAllRegisteredUsers();
+       return registeredUsers;
+    }
+
 }

@@ -12,4 +12,6 @@ public interface UserDetailsService {
     public void deleteUserDetailsById(Long userId) throws Exception;
 
     UserDetails createUser(UserDetails userDetails);
+
+    public void saveAllUserDetails(List<UserDetails> userDetails);
 }

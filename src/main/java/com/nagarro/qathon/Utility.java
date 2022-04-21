@@ -1,6 +1,10 @@
 package com.nagarro.qathon;
 
+import com.nagarro.qathon.entity.UserDetails;
+
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Utility {

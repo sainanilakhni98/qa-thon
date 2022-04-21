@@ -6,6 +6,7 @@ import com.nagarro.qathon.repository.UserRepository;
 import com.nagarro.qathon.service.EmailSenderService;
 import com.nagarro.qathon.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,9 @@ import static com.nagarro.qathon.constant.UserImplConstant.NO_USER_FOUND_BY_EMAI
 @Service
 public class EmailSenderServiceImpl implements EmailSenderService {
 
+    @Value("${fromEmailAddress}")
+    private String fromEmailAddress;
+
     @Autowired
     private JavaMailSender mailSender;
 
@@ -23,16 +27,12 @@ public class EmailSenderServiceImpl implements EmailSenderService {
 
     @Override
     public void sendCampaign(String toEmail, String body, String subject) {
-
         SimpleMailMessage message = new SimpleMailMessage();
-
-        message.setFrom("springemailjune@gmail.com");
+        message.setFrom(fromEmailAddress);
         message.setTo(toEmail);
         message.setText(body);
         message.setSubject(subject);
-
         mailSender.send(message);
-        System.out.println("Mail Send ...");
     }
 
     @Override
