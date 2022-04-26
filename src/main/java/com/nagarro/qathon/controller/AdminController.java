@@ -36,23 +36,23 @@ public class AdminController extends ExceptionHandling {
         return new ResponseEntity<UserDetails>(newUserDetails, HttpStatus.CREATED);
     }
 
-    @PutMapping("/user/edit/{id}")
-    public ResponseEntity<UserDetails> updateUserDetails(@PathVariable("id") Long userId,
-                                       @RequestBody UserDetails userDetails ) throws Exception {
+//    @PutMapping("/user/edit/{id}")
+//    public ResponseEntity<UserDetails> updateUserDetails(@PathVariable("id") Long userId,
+//                                       @RequestBody UserDetails userDetails ) throws Exception {
+//
+//        UserDetails updatedUserDetails = userDetailsService.updateUserDetails(userId,userDetails);
+//        return ResponseEntity.ok(updatedUserDetails);
+//    }
 
-        UserDetails updatedUserDetails = userDetailsService.updateUserDetails(userId,userDetails);
-        return ResponseEntity.ok(updatedUserDetails);
-    }
-
-    @DeleteMapping("/user/delete/{id}")
-    public ResponseEntity<?> deleteUserDetailsById(@PathVariable("id") Long userId) throws Exception {
-        try {
-            userDetailsService.deleteUserDetailsById(userId);
-        }catch (Exception e){
-            throw new NoResultException("User Not Found for id = "+userId);
-        }
-        return ResponseEntity.ok("UserDetails deleted Successfully!!");
-    }
+//    @DeleteMapping("/user/delete/{id}")
+//    public ResponseEntity<?> deleteUserDetailsById(@PathVariable("id") Long userId) throws Exception {
+//        try {
+//            userDetailsService.deleteUserDetailsById(userId);
+//        }catch (Exception e){
+//            throw new NoResultException("User Not Found for id = "+userId);
+//        }
+//        return ResponseEntity.ok("UserDetails deleted Successfully!!");
+//    }
 
     @PostMapping("/campaign")
     public ResponseEntity<?> sendCampaign(@RequestBody EmailRequest emailRequest){
