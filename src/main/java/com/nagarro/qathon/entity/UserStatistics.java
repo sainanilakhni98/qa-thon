@@ -1,17 +1,15 @@
 package com.nagarro.qathon.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 @Table(name = "user_statistics")
 public class UserStatistics {
 
@@ -49,5 +47,7 @@ public class UserStatistics {
         this.bugReports = bugReports;
         this.user = user;
     }
+
+
 }
 

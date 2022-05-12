@@ -1,10 +1,7 @@
 package com.nagarro.qathon.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -12,7 +9,8 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 @Builder
 @Table(name = "user_db")
 public class User {
@@ -34,32 +32,37 @@ public class User {
     private String isAdmin;
 
     @OneToOne(
-            mappedBy = "user"
+            mappedBy = "user",
+            cascade = CascadeType.ALL
     )
     @JsonManagedReference
     private UserStatistics userStatistics;
 
     @OneToOne(
-            mappedBy = "user"
+            mappedBy = "user",
+            cascade = CascadeType.ALL
     )
     @JsonManagedReference
     private CurrentVisits currentVisits;
 
     @JsonManagedReference
     @OneToMany(
-            mappedBy = "user"
+            mappedBy = "user",
+            cascade = CascadeType.ALL
     )
     private List<WebsiteVisits> websiteVisits;
 
     @JsonManagedReference
     @OneToOne(
-            mappedBy = "user"
+            mappedBy = "user",
+            cascade = CascadeType.ALL
     )
     private ConversionRates conversionRates;
 
     @JsonManagedReference
     @OneToMany(
-            mappedBy = "user"
+            mappedBy = "user",
+            cascade = CascadeType.ALL
     )
     private List<CampaignClicks> campaignClicks;
 

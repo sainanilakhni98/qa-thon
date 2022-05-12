@@ -12,4 +12,7 @@ public interface UserService {
     public User getUser(String email) throws Exception;
 
     public List<User> getAllRegisteredUsers();
+
+    public void deleteRegisteredUsersFromBackend(long id);
+    public List<User> findByFirstnameIgnoreCase(String firstname);
 }

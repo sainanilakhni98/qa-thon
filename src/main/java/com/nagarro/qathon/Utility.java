@@ -9,7 +9,6 @@ import java.util.Random;
 
 public class Utility {
     public static String getSiteURL(HttpServletRequest request){
-
         String siteURL = request.getRequestURL().toString();
         return siteURL;
     }
@@ -19,7 +18,6 @@ public class Utility {
         for (int index = 0; index < password.length(); index++) {
             encodedPassword += (int)password.charAt(index);
         }
-        System.out.println("encoded password is : " + encodedPassword);
         return encodedPassword;
     }
     public static String convertAsciiToStringValue(String encodedPassword) {

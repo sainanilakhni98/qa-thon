@@ -30,29 +30,37 @@ public class AdminController extends ExceptionHandling {
         return userDetailsService.getAllUsersDetails();
     }
 
-    @PostMapping("/user/create")
-    public ResponseEntity<UserDetails> createUser(@RequestBody UserDetails userDetails){
-        UserDetails newUserDetails = userDetailsService.createUser(userDetails);
-        return new ResponseEntity<UserDetails>(newUserDetails, HttpStatus.CREATED);
+    @PostMapping("/krncky-17-user/create")
+    public ResponseEntity<UserDetails> createUser(@RequestBody UserDetails userDetails) throws Exception {
+        try {
+            UserDetails newUserDetails = userDetailsService.createUser(userDetails);
+            return new ResponseEntity<UserDetails>(newUserDetails, HttpStatus.CREATED);
+        }catch (Exception e) {
+            throw new Exception("Something went wrong in create");
+        }
     }
 
-//    @PutMapping("/user/edit/{id}")
-//    public ResponseEntity<UserDetails> updateUserDetails(@PathVariable("id") Long userId,
-//                                       @RequestBody UserDetails userDetails ) throws Exception {
-//
-//        UserDetails updatedUserDetails = userDetailsService.updateUserDetails(userId,userDetails);
-//        return ResponseEntity.ok(updatedUserDetails);
-//    }
+    @PutMapping("/krncky-17-user/edit/{id}")
+    public ResponseEntity<?> updateUserDetails(@PathVariable("id") Long userId,
+                                       @RequestBody UserDetails userDetails ) throws Exception {
 
-//    @DeleteMapping("/user/delete/{id}")
-//    public ResponseEntity<?> deleteUserDetailsById(@PathVariable("id") Long userId) throws Exception {
-//        try {
-//            userDetailsService.deleteUserDetailsById(userId);
-//        }catch (Exception e){
-//            throw new NoResultException("User Not Found for id = "+userId);
-//        }
-//        return ResponseEntity.ok("UserDetails deleted Successfully!!");
-//    }
+        try {
+            UserDetails updatedUserDetails = userDetailsService.updateUserDetails(userId, userDetails);
+            return ResponseEntity.ok(updatedUserDetails);
+        }catch (Exception e){
+            throw new NoResultException("User Not Found for id = "+userId);
+        }
+    }
+
+    @DeleteMapping("/krncky-17-user/delete/{id}")
+    public ResponseEntity<?> deleteUserDetailsById(@PathVariable("id") Long userId) throws Exception {
+        try {
+            userDetailsService.deleteUserDetailsById(userId);
+        }catch (Exception e){
+            throw new NoResultException("User Not Found for id = "+userId);
+        }
+        return ResponseEntity.ok("UserDetails deleted Successfully!!");
+    }
 
     @PostMapping("/campaign")
     public ResponseEntity<?> sendCampaign(@RequestBody EmailRequest emailRequest){

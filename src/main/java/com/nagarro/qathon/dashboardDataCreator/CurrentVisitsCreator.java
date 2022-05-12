@@ -8,8 +8,8 @@ import com.nagarro.qathon.entity.User;
 public class CurrentVisitsCreator {
     public static CurrentVisits getCurrentVisits(User user){
         return new CurrentVisits(
-                Utility.generateIntRandomNumber(9,32)+Math.random(),Utility.generateIntRandomNumber(19,30)+Math.random(),
-                Utility.generateIntRandomNumber(9,32)+Math.random(),Utility.generateIntRandomNumber(20,32)+Math.random(),
+                (double)Utility.generateIntRandomNumber(9,32),(double)Utility.generateIntRandomNumber(19,30),
+                (double)Utility.generateIntRandomNumber(9,32),(double)Utility.generateIntRandomNumber(20,32),
                 user
         );
     }
